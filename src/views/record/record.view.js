@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Text, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Image, View } from "react-native";
 import { Audio } from "expo-av";
 import {
   AndroidAudioEncoder,
@@ -34,6 +34,10 @@ export function RecordView({ navigation }) {
 
     requestPermission();
   }, []);
+
+  const handleRestart = () => {
+    setRecordedURI("");
+  }
 
   const handleContinue = async () => {
     try {
@@ -124,6 +128,7 @@ export function RecordView({ navigation }) {
 
       // Get Player Status
       const playerStatus = await audioPlayer.current.getStatusAsync();
+      const { durationMillis } = playerStatus;
 
       // Play if song is loaded successfully
       if (playerStatus.isLoaded) {
@@ -132,6 +137,11 @@ export function RecordView({ navigation }) {
           setIsPlaying(true);
         }
       }
+
+      // Stop playing when audio finishes
+      setTimeout(() => {
+        stopPlaying();
+      }, durationMillis);
     } catch (error) {}
   };
 
@@ -158,12 +168,10 @@ export function RecordView({ navigation }) {
             Graba una nota de voz que quieras analizar
           </Text>
           <TouchableOpacity
-            style={styles.button}
+            style={styles.recordButton}
             onPress={recording ? stopRecording : startRecording}
           >
-            <Text style={styles.buttonTitle}>
-              {recording ? "Detener" : "Grabar"}
-            </Text>
+            <Image style={styles.recordImage} source={recording ? require("./../../../assets/stop.png") : require("./../../../assets/microphone.png")  } />
           </TouchableOpacity>
         </>
       )}
@@ -171,18 +179,22 @@ export function RecordView({ navigation }) {
         <>
           <Text style={styles.stepTitle}>Paso 2: </Text>
           <Text style={styles.stepInstructions}>
-            Escucha la grabación y confirma que quieres continuar
+            Escucha la grabación y, en caso de que quieras volver a grabar, presiona el botón de reiniciar
           </Text>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={isPlaying ? stopPlaying : playRecordedAudio}
-          >
-            <Text style={styles.buttonTitle}>
-              {isPlaying ? "Pausar" : "Escuchar"}
-            </Text>
-          </TouchableOpacity>
-
+          <View style={styles.buttonsContainer}>
+            <TouchableOpacity
+              style={styles.actionButton}
+              onPress={isPlaying ? stopPlaying : playRecordedAudio}
+            >
+              <Image style={styles.actionImage} source={isPlaying ? require("./../../../assets/pause.png") : require("./../../../assets/play.png")  } />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.actionButton} onPress={handleRestart}>
+              <Image style={styles.actionImage} source={require("./../../../assets/restart.png")} />
+            </TouchableOpacity>
+          </View>
+          <Text style={styles.stepInstructions}>
+            Una vez estés conforme con la grabación, presiona Continuar para proceder con el análisis
+          </Text>
           <TouchableOpacity style={styles.button} onPress={handleContinue}>
             <Text style={styles.buttonTitle}>Continuar</Text>
           </TouchableOpacity>
@@ -201,6 +213,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Oswald_400Regular",
     marginBottom: 20,
+    textAlign: "center",
+    width: 300
+  },
+  recordButton: {
+    width: 150,
+    height: 150,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0096FF",
+    borderRadius: 100,
+    marginBottom: 20,
+  },
+  buttonsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 20
+  },
+  actionButton: {
+    width: 80,
+    height: 80,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0096FF",
+    borderRadius: 70,
+    marginBottom: 20,
+  },
+  recordImage: {
+    width: 100,
+    height: 100,
+  },
+  actionImage: {
+    width: 50,
+    height: 50,
   },
   button: {
     width: 130,
