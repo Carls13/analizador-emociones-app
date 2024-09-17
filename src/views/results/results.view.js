@@ -3,42 +3,48 @@ import {
   Text,
   ScrollView,
   SafeAreaView,
+  Image,
+  TouchableOpacity
 } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
-import { StatsGraph } from "../../components/statsGraph/statsGraph";
+import { EMOTIONS } from "../../data/emotions";
 
-export function ResultsView() {
-  const series = [50, 50, 50];
-  const sliceColor = ["#2196F388", "#2196F399", "#2196F3BB"];
+export function ResultsView({ route, navigation }) {
+  console.log(route.params)
+
+  const { prediction } = route.params;
+
+  const predictionLabel = prediction.split(".wav")[0] || 'neutral';
+
+  const emotionData = EMOTIONS[predictionLabel];
+
+  const restartProcess = () => {
+    navigation.navigate("Home")
+  }
 
   return (
-    <SafeAreaView style={{ paddingTop: 20 }}>
+    <SafeAreaView style={{ padding: 20 }}>
       <ScrollView>
         <StatusBar style="auto" />
-
         <Text style={styles.title}>Resultados</Text>
-
-        <StatsGraph
-          series={series}
-          sliceColor={sliceColor}
-          title="Primer Formante"
-        />
-        <StatsGraph
-          series={series}
-          sliceColor={sliceColor}
-          title="Segundo Formante"
-        />
-        <StatsGraph
-          series={series}
-          sliceColor={sliceColor}
-          title="Tercer Formante"
-        />
-        <StatsGraph
-          series={series}
-          sliceColor={sliceColor}
-          title="Cuarto Formante"
-        />
+        {
+          predictionLabel && <>
+            <Text style={styles.emotionTitle}>{emotionData.title}</Text>
+            <Image style={styles.image} source={emotionData.image} />
+            {
+              emotionData.description.map((paragraph, i) => {
+                return <Text key={i} style={styles.emotionText}>{paragraph}</Text>;
+              })
+            }
+          </>  
+        }
+        <TouchableOpacity
+            style={styles.button}
+            onPress={restartProcess}
+          >
+            <Text style={styles.buttonTitle}>Reiniciar</Text>
+          </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
@@ -48,7 +54,42 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontFamily: "Oswald_400Regular",
-    marginBottom: 20,
+    marginBottom: 30,
     textAlign: "center"
+  },
+  emotionTitle: {
+    fontSize: 32,
+    fontFamily: "Oswald_400Regular",
+    marginBottom: 20,
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+  image: {
+    width: 200,
+    height: 200,
+    marginBottom: 20,
+    display: 'flex',
+    margin: "auto"
+  },
+  emotionText: {
+    fontSize: 16,
+    fontFamily: "Oswald_400Regular",
+    marginBottom: 20,
+    textAlign: "left"
+  },
+  button: {
+    width: 130,
+    height: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#0096FF',
+    borderRadius: 8,
+    margin: "auto",
+    marginTop: 50
+  },
+  buttonTitle: {
+    fontSize: 18,
+    color: 'white',
+    fontFamily: 'Oswald_400Regular',
   },
 });
