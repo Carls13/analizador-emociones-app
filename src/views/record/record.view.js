@@ -1,7 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
+import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Audio } from "expo-av";
+import {
+  AndroidAudioEncoder,
+  AndroidOutputFormat,
+  IOSOutputFormat,
+} from 'expo-av/build/Audio';
 import { AppContainer } from "../../components/appContainer/appContainer";
+import axios from "axios";
 
 export function RecordView({ navigation }) {
   const [recording, setRecording] = useState();
@@ -9,6 +15,17 @@ export function RecordView({ navigation }) {
   const [recordedURI, setRecordedURI] = useState("");
 
   const audioPlayer = useRef(new Audio.Sound());
+
+  // utitlity function to convert BLOB to BASE64
+  const blobToBase64 = (blob) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(blob);
+    return new Promise((resolve) => {
+      reader.onloadend = () => {
+        resolve(reader.result);
+      };
+    });
+  };
 
   useEffect(() => {
     const requestPermission = async () => {
@@ -18,9 +35,45 @@ export function RecordView({ navigation }) {
     requestPermission();
   }, []);
 
-  const handleContinue = () => {
-    console.log("Go to next view");
-    navigation.navigate("Results");
+  const handleContinue = async () => {
+    try {
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", recordedURI, true);
+        xhr.send(null);
+      });
+  
+      let audioBase64 = await blobToBase64(blob);
+      audioBase64 = audioBase64.split(',')[1];
+  
+      const conversionBody = {
+        file: audioBase64,
+      };
+  
+      const conversionResponse = await axios.post("https://caring-passion-production-27f1.up.railway.app/convert", conversionBody);
+  
+      const convertedWAVFile = conversionResponse.data.file;
+
+      const emotionBody = {
+        audio_data: convertedWAVFile
+      }
+
+      const emotionResponse = await axios.post("http://192.168.1.102:8080/detectar", emotionBody);
+
+      const { prediction } = emotionResponse.data;
+
+      navigation.navigate("Results", { prediction });
+  
+    } catch (error) {
+      console.log(error.message)
+    }
   };
 
   async function startRecording() {
@@ -32,9 +85,18 @@ export function RecordView({ navigation }) {
       });
 
       console.log("Starting recording..");
-      const { recording } = await Audio.Recording.createAsync(
-        Audio.RecordingOptionsPresets.HIGH_QUALITY
-      );
+      const { ios, android } = Audio.RecordingOptionsPresets.HIGH_QUALITY;
+      const { recording } = await Audio.Recording.createAsync({ 
+        android: {
+          ...android,
+          extension: '.wav', 
+        }, 
+        ios: { 
+          ...ios,
+          extension: '.wav', 
+          outputFormat: IOSOutputFormat.MPEG4AAC 
+        } 
+      }); 
       setRecording(recording);
       console.log("Recording started");
     } catch (err) {
