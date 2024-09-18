@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Text, StyleSheet, TouchableOpacity, Image, View } from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Image, View, ActivityIndicator } from "react-native";
 import { Audio } from "expo-av";
 import {
   AndroidAudioEncoder,
@@ -13,6 +13,8 @@ export function RecordView({ navigation }) {
   const [recording, setRecording] = useState();
   const [isPlaying, setIsPlaying] = useState();
   const [recordedURI, setRecordedURI] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   const audioPlayer = useRef(new Audio.Sound());
 
@@ -41,6 +43,7 @@ export function RecordView({ navigation }) {
 
   const handleContinue = async () => {
     try {
+      setLoading(true);
       const blob = await new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
         xhr.onload = function () {
@@ -69,7 +72,7 @@ export function RecordView({ navigation }) {
         audio_data: convertedWAVFile
       }
 
-      const emotionResponse = await axios.post("http://192.168.1.102:8080/detectar", emotionBody);
+      const emotionResponse = await axios.post("https://analizador-emociones-backend-production.up.railway.app/detectar", emotionBody);
 
       const { prediction } = emotionResponse.data;
 
@@ -77,6 +80,7 @@ export function RecordView({ navigation }) {
   
     } catch (error) {
       console.log(error.message)
+      setLoading(false);
     }
   };
 
@@ -195,9 +199,12 @@ export function RecordView({ navigation }) {
           <Text style={styles.stepInstructions}>
             Una vez estés conforme con la grabación, presiona Continuar para proceder con el análisis
           </Text>
-          <TouchableOpacity style={styles.button} onPress={handleContinue}>
-            <Text style={styles.buttonTitle}>Continuar</Text>
-          </TouchableOpacity>
+          {
+            loading ? <ActivityIndicator color={"#0096FF"} size="large" /> :
+            <TouchableOpacity style={styles.button} onPress={handleContinue}>
+              <Text style={styles.buttonTitle}>Continuar</Text>
+            </TouchableOpacity>
+          }
         </>
       )}
     </AppContainer>
