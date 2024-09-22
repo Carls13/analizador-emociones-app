@@ -6,9 +6,9 @@ export default function App() {
     Oswald_400Regular, Oswald_600SemiBold
   });
 
-  if (!fontsLoaded) {
-    return null;
-  }
+    // if (!fontsLoaded) {
+    //   return null;
+    // }
 
   return <Navigator />;
 }
