@@ -214,11 +214,12 @@ export function RecordView({ navigation }) {
 const styles = StyleSheet.create({
   stepTitle: {
     fontSize: 18,
-    fontFamily: "Oswald_600SemiBold",
+    fontFamily: "Roboto",
+    fontWeight: "bold"
   },
   stepInstructions: {
     fontSize: 16,
-    fontFamily: "Oswald_400Regular",
+    fontFamily: "Roboto",
     marginBottom: 20,
     textAlign: "center",
     width: 300
@@ -267,6 +268,6 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 18,
     color: "white",
-    fontFamily: "Oswald_400Regular",
+    fontFamily: "Roboto",
   },
 });
