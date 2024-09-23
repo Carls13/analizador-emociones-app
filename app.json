@@ -1,35 +1,41 @@
 {
   "expo": {
-    "name": "analizador-emociones-app",
-    "slug": "analizador-emociones-app",
+    "name": "analizador",
+    "slug": "analizador",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "icon": "./assets/images/icon.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.carls13.analizadoremocionesapp"
+      "package": "com.carls13.analizador"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "experiments": {
+      "typedRoutes": true
     },
     "extra": {
       "eas": {
-        "projectId": "f5744f1d-98ee-4a74-ae03-80282c078724"
+        "projectId": "4a42ac66-c35a-4c21-8209-2a27d5237a36"
       }
     }
   }

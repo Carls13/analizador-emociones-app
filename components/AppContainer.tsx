@@ -1,10 +1,11 @@
 import { StatusBar } from "expo-status-bar";
+import { PropsWithChildren } from "react";
 import { View, StyleSheet } from "react-native";
 
-export function AppContainer({ children }) {
+export function AppContainer(props: PropsWithChildren) {
   return (
     <View style={styles.container}>
-      {children}
+      {props.children}
       <StatusBar style="auto" />
     </View>
   );

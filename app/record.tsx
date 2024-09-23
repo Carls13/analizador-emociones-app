@@ -2,24 +2,24 @@ import { useState, useRef, useEffect } from "react";
 import { Text, StyleSheet, TouchableOpacity, Image, View, ActivityIndicator } from "react-native";
 import { Audio } from "expo-av";
 import {
-  AndroidAudioEncoder,
-  AndroidOutputFormat,
   IOSOutputFormat,
+  Recording,
 } from 'expo-av/build/Audio';
-import { AppContainer } from "../../components/appContainer/appContainer";
 import axios from "axios";
+import { AppContainer } from "@/components/AppContainer";
+import { router } from "expo-router";
 
-export function RecordView({ navigation }) {
-  const [recording, setRecording] = useState();
-  const [isPlaying, setIsPlaying] = useState();
-  const [recordedURI, setRecordedURI] = useState("");
+export default function RecordView() {
+  const [recording, setRecording] = useState<null | Recording>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [recordedURI, setRecordedURI] = useState<string>("");
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const audioPlayer = useRef(new Audio.Sound());
 
   // utitlity function to convert BLOB to BASE64
-  const blobToBase64 = (blob) => {
+  const blobToBase64 = (blob: any) => {
     const reader = new FileReader();
     reader.readAsDataURL(blob);
     return new Promise((resolve) => {
@@ -58,7 +58,7 @@ export function RecordView({ navigation }) {
       });
   
       let audioBase64 = await blobToBase64(blob);
-      audioBase64 = audioBase64.split(',')[1];
+      audioBase64 = (audioBase64 as string).split(',')[1];
   
       const conversionBody = {
         file: audioBase64,
@@ -76,9 +76,9 @@ export function RecordView({ navigation }) {
 
       const { prediction } = emotionResponse.data;
 
-      navigation.navigate("Results", { prediction });
+      router.push(({ pathname: "/results", params: { prediction } }));
   
-    } catch (error) {
+    } catch (error: any) {
       console.log(error.message)
       setLoading(false);
     }
@@ -93,7 +93,7 @@ export function RecordView({ navigation }) {
       });
 
       console.log("Starting recording..");
-      const { ios, android } = Audio.RecordingOptionsPresets.HIGH_QUALITY;
+      const { ios, android, web } = Audio.RecordingOptionsPresets.HIGH_QUALITY;
       const { recording } = await Audio.Recording.createAsync({ 
         android: {
           ...android,
@@ -103,7 +103,8 @@ export function RecordView({ navigation }) {
           ...ios,
           extension: '.wav', 
           outputFormat: IOSOutputFormat.MPEG4AAC 
-        } 
+        } ,
+        web
       }); 
       setRecording(recording);
       console.log("Recording started");
@@ -114,13 +115,13 @@ export function RecordView({ navigation }) {
 
   async function stopRecording() {
     console.log("Stopping recording..");
-    setRecording(undefined);
-    await recording.stopAndUnloadAsync();
+    await recording?.stopAndUnloadAsync();
     await Audio.setAudioModeAsync({
       allowsRecordingIOS: false,
     });
-    const uri = recording.getURI();
-    setRecordedURI(uri);
+    const uri = recording?.getURI();
+    setRecordedURI(uri as string);
+    setRecording(null);
     console.log("Recording stopped and stored at", uri);
   }
 
@@ -132,20 +133,21 @@ export function RecordView({ navigation }) {
 
       // Get Player Status
       const playerStatus = await audioPlayer.current.getStatusAsync();
-      const { durationMillis } = playerStatus;
 
-      // Play if song is loaded successfully
       if (playerStatus.isLoaded) {
+        const { durationMillis } = playerStatus;
+
+        // Play if song is loaded successfully
         if (playerStatus.isPlaying === false) {
           audioPlayer.current.playAsync();
           setIsPlaying(true);
         }
-      }
 
-      // Stop playing when audio finishes
-      setTimeout(() => {
-        stopPlaying();
-      }, durationMillis);
+        // Stop playing when audio finishes
+        setTimeout(() => {
+          stopPlaying();
+        }, durationMillis);
+      }
     } catch (error) {}
   };
 
@@ -175,7 +177,7 @@ export function RecordView({ navigation }) {
             style={styles.recordButton}
             onPress={recording ? stopRecording : startRecording}
           >
-            <Image style={styles.recordImage} source={recording ? require("./../../../assets/stop.png") : require("./../../../assets/microphone.png")  } />
+            <Image style={styles.recordImage} source={recording ? require("./../assets/images/stop.png") : require("./../assets/images/microphone.png")  } />
           </TouchableOpacity>
         </>
       )}
@@ -190,10 +192,10 @@ export function RecordView({ navigation }) {
               style={styles.actionButton}
               onPress={isPlaying ? stopPlaying : playRecordedAudio}
             >
-              <Image style={styles.actionImage} source={isPlaying ? require("./../../../assets/pause.png") : require("./../../../assets/play.png")  } />
+              <Image style={styles.actionImage} source={isPlaying ? require("./../assets/images/pause.png") : require("./../assets/images/play.png")  } />
             </TouchableOpacity>
             <TouchableOpacity style={styles.actionButton} onPress={handleRestart}>
-              <Image style={styles.actionImage} source={require("./../../../assets/restart.png")} />
+              <Image style={styles.actionImage} source={require("./../assets/images/restart.png")} />
             </TouchableOpacity>
           </View>
           <Text style={styles.stepInstructions}>

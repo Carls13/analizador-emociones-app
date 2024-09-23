@@ -8,19 +8,25 @@ import {
 } from "react-native";
 
 import { StatusBar } from "expo-status-bar";
-import { EMOTIONS } from "../../data/emotions";
+import { EMOTIONS } from "@/data/emotions";
+import { router, useLocalSearchParams } from "expo-router";
 
-export function ResultsView({ route, navigation }) {
-  console.log(route.params)
+enum EmotionsEnum {
+  "happy", "sad", "angry", "disgust", "neutral", "ps", "fear"
+}
+type Emotion = keyof typeof EmotionsEnum;
 
-  const { prediction } = route.params;
+export default function ResultsView() {
+  const params: any = useLocalSearchParams();
 
-  const predictionLabel = prediction.split(".wav")[0] || 'neutral';
+  const predictionLabel: Emotion = params.prediction.split(".wav")[0] || 'neutral';
 
   const emotionData = EMOTIONS[predictionLabel];
 
   const restartProcess = () => {
-    navigation.navigate("Home")
+    router.push({ 
+      pathname: '/'
+     });
   }
 
   return (

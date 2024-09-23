@@ -1,15 +1,17 @@
 import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
-import { AppContainer } from '../../components/appContainer/appContainer';
 
-export function HomeView({ navigation }) {
+import { router } from 'expo-router';
+import { AppContainer } from '@/components/AppContainer';
+
+export default function HomeView() {
   const handlePress = () => {
     console.log("Pressed!");
-    navigation.navigate('Record');
+    router.push('/record');
   }
 
   return (
     <AppContainer>
-      <Image style={styles.image} source={require("./../../../assets/logo-telecom.png")} />
+      <Image style={styles.image} source={require("./../assets/images/logo-telecom.png")} />
       <Text style={styles.title}>Analizador de emociones</Text>
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonTitle}>Comenzar</Text>
