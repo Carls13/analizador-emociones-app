@@ -53,13 +53,11 @@ export function ResultsView({ route, navigation }) {
 const styles = StyleSheet.create({
   title: {
     fontSize: 40,
-    fontFamily: "Roboto",
     marginBottom: 30,
     textAlign: "center"
   },
   emotionTitle: {
     fontSize: 32,
-    fontFamily: "Roboto",
     marginBottom: 20,
     textAlign: "center",
     fontWeight: "bold"
@@ -73,7 +71,6 @@ const styles = StyleSheet.create({
   },
   emotionText: {
     fontSize: 16,
-    fontFamily: "Roboto",
     marginBottom: 20,
     textAlign: "left"
   },
@@ -90,6 +87,6 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 18,
     color: 'white',
-    fontFamily: 'Roboto',
+    
   },
 });

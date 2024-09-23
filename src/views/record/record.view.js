@@ -214,12 +214,10 @@ export function RecordView({ navigation }) {
 const styles = StyleSheet.create({
   stepTitle: {
     fontSize: 18,
-    fontFamily: "Roboto",
     fontWeight: "bold"
   },
   stepInstructions: {
     fontSize: 16,
-    fontFamily: "Roboto",
     marginBottom: 20,
     textAlign: "center",
     width: 300
@@ -268,6 +266,5 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 18,
     color: "white",
-    fontFamily: "Roboto",
   },
 });

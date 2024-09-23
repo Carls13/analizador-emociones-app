@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 25,
-    fontFamily: 'Roboto',
     marginBottom: 50,
   },
   button: {
@@ -44,15 +43,13 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 18,
     color: 'white',
-    fontFamily: 'Roboto',
+    
   },
   authorTitle: {
     fontSize: 18,
-    fontFamily: 'Roboto',
     marginBottom: 5,
   },
   author: {
     fontSize: 16,
-    fontFamily: 'Roboto',
   }
 });
