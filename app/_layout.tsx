@@ -12,6 +12,9 @@ export default function RootLayout() {
       <Stack.Screen name="results" options={{
         headerShown: false
       }} />
+      <Stack.Screen name="manual" options={{
+        headerShown: false
+      }} />
     </Stack>
   );
 }

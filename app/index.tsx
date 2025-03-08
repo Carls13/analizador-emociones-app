@@ -1,12 +1,15 @@
 import { StyleSheet, Text, Image, TouchableOpacity } from 'react-native';
 
-import { router } from 'expo-router';
+import { Href, router } from 'expo-router';
 import { AppContainer } from '@/components/AppContainer';
 
 export default function HomeView() {
   const handlePress = () => {
-    console.log("Pressed!");
     router.push('/record');
+  }
+
+  const handleNavigateToManual = () => {
+    router.push('/manual' as Href<string | object>);
   }
 
   return (
@@ -19,6 +22,8 @@ export default function HomeView() {
       <Text style={styles.authorTitle}>Desarrollado por:</Text>
       <Text style={styles.author}>Carlos Hernández</Text>
       <Text style={styles.author}>Johander Parra</Text>
+
+      <Text onPress={handleNavigateToManual} style={styles.manual}>Guía de Usuario</Text>
     </AppContainer>
   );
 }
@@ -45,7 +50,6 @@ const styles = StyleSheet.create({
   buttonTitle: {
     fontSize: 18,
     color: 'white',
-    
   },
   authorTitle: {
     fontSize: 18,
@@ -53,5 +57,11 @@ const styles = StyleSheet.create({
   },
   author: {
     fontSize: 16,
+  },
+  manual: {
+    fontSize: 16,
+    marginTop: 50,
+    textDecorationLine: 'underline',
+    color: '#0096FF',
   }
 });

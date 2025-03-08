@@ -68,7 +68,7 @@ export const EMOTIONS: EmotionsInterface  = {
   },
   ps: {
     title: "Sorpresa",
-    image: require("./../assets/images/disgust.png"),
+    image: require("./../assets/images/ps.png"),
     description: [
       "La sorpresa es una emoción breve pero poderosa que ocurre cuando una persona enfrenta algo inesperado. Esta emoción puede ser tanto positiva como negativa, dependiendo de la naturaleza del evento que la desencadena. En términos evolutivos, la sorpresa cumple una función importante al interrumpir el pensamiento y dirigir toda la atención hacia la nueva información que ha surgido, lo que permite una reevaluación rápida del entorno. Este proceso de reevaluación puede desencadenar otras emociones, como alegría, miedo o disgusto, dependiendo del contexto.",
       "A nivel fisiológico, la sorpresa puede incluir reacciones como el aumento del ritmo cardíaco, la dilatación de las pupilas y la tensión muscular. Psicológicamente, la sorpresa tiene la capacidad de alterar el estado emocional de una persona de manera súbita, lo que puede provocar confusión temporal o incluso sensación de vulnerabilidad. Sin embargo, no todas las sorpresas son negativas; algunas pueden ser el catalizador de cambios positivos o de oportunidades de crecimiento.",
