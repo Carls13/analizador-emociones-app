@@ -26,21 +26,34 @@ export default function UserManualScreen() {
         <Text style={styles.text}>- Conexión a Internet: Requerida para la sincronización de datos y actualizaciones.</Text>
         
         <Text style={styles.sectionTitle}>Uso de la Aplicación</Text>
-        <Text style={styles.boldText}>1. Grabación de Voz</Text>
+        <Text style={styles.boldText}>1. Inicio</Text>
         <Text style={styles.text}>- Abra la aplicación.</Text>
         <Text style={styles.text}>- De click al botón "Comenzar" de la vista de inicio.</Text>
+        
+        <Text style={styles.boldText}>2. Registro del Paciente</Text>
+        <Text style={styles.text}>- Antes de grabar una emoción, se debe registrar al paciente.</Text>
+        <Text style={styles.text}>- Ingrese los datos del paciente: Nombre completo, correo, teléfono de contacto y cédula de identidad.</Text>
+        <Text style={styles.text}>- Una vez completado el formulario, presione "Guardar" para almacenar la información.</Text>
+        
+        <Text style={styles.boldText}>3. Grabación de Voz</Text>
         <Text style={styles.text}>- Presione el botón de grabación.</Text>
         <Text style={styles.text}>- Conceda los permisos necesarios del dispositivo para poder grabar.</Text>
         <Text style={styles.text}>- Hable de manera natural durante al menos 5 segundos.</Text>
         <Text style={styles.text}>- Detenga la grabación cuando finalice su mensaje.</Text>
         
-        <Text style={styles.boldText}>2. Confirmación</Text>
+        <Text style={styles.boldText}>4. Confirmación</Text>
         <Text style={styles.text}>- Si está de acuerdo con la grabación, proceda a enviar los resultados utilizando el botón "Continuar".</Text>
         <Text style={styles.text}>- Si no está de acuerdo, presione el botón de reiniciar para volver a grabar.</Text>
         
-        <Text style={styles.boldText}>3. Análisis de Emoción</Text>
+        <Text style={styles.boldText}>5. Análisis de Emoción</Text>
         <Text style={styles.text}>- La aplicación mostrará el resultado con la emoción detectada.</Text>
         <Text style={styles.text}>- Emociones posibles: felicidad, tristeza, ira, sorpresa, disgusto, miedo y neutral.</Text>
+        
+        <Text style={styles.boldText}>6. Uso del Módulo de Historial</Text>
+        <Text style={styles.text}>- Para ver las predicciones almacenadas, acceda a la sección de "Historial".</Text>
+        <Text style={styles.text}>- Puede filtrar las predicciones por paciente o por emoción detectada.</Text>
+        <Text style={styles.text}>- Cada registro mostrará el nombre del paciente, la emoción detectada y la fecha del análisis.</Text>
+        <Text style={styles.text}>- Para actualizar la lista de predicciones, deslice hacia abajo en la pantalla del historial.</Text>
         
         <Text style={styles.sectionTitle}>Solución de Problemas</Text>
         <Text style={styles.boldText}>No se detecta la voz</Text>
