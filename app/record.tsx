@@ -7,7 +7,7 @@ import {
 } from 'expo-av/build/Audio';
 import axios from "axios";
 import { AppContainer } from "@/components/AppContainer";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 export default function RecordView() {
   const [recording, setRecording] = useState<null | Recording>(null);
@@ -17,6 +17,8 @@ export default function RecordView() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const audioPlayer = useRef(new Audio.Sound());
+
+  const params: any = useLocalSearchParams();
 
   // utitlity function to convert BLOB to BASE64
   const blobToBase64 = (blob: any) => {
@@ -76,7 +78,9 @@ export default function RecordView() {
 
       const { prediction } = emotionResponse.data;
 
-      router.push(({ pathname: "/results", params: { prediction } }));
+      const patient: string = params.patient;
+
+      router.push(({ pathname: "/results", params: { prediction, patient } }));
   
     } catch (error: any) {
       console.log(error.message)

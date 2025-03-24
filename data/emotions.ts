@@ -1,4 +1,4 @@
-interface EmotionsInterface {
+export interface EmotionsInterface {
   happy: {
     title: string,
     image: any,

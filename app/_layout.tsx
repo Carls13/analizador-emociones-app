@@ -6,6 +6,9 @@ export default function RootLayout() {
       <Stack.Screen name="index" options={{
         headerShown: false
       }} />
+      <Stack.Screen name="save-patient" options={{
+        headerShown: false
+      }} />
       <Stack.Screen name="record" options={{
         headerShown: false
       }} />
@@ -13,6 +16,9 @@ export default function RootLayout() {
         headerShown: false
       }} />
       <Stack.Screen name="manual" options={{
+        headerShown: false
+      }} />
+      <Stack.Screen name="history" options={{
         headerShown: false
       }} />
     </Stack>

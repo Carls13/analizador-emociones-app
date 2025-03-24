@@ -5,11 +5,15 @@ import { AppContainer } from '@/components/AppContainer';
 
 export default function HomeView() {
   const handlePress = () => {
-    router.push('/record');
+    router.push('/save-patient');
+  }
+  
+  const handleNavigateToHistory = () => {
+    router.push('/history');
   }
 
   const handleNavigateToManual = () => {
-    router.push('/manual' as Href<string | object>);
+    router.push('/manual' as Href);
   }
 
   return (
@@ -19,6 +23,7 @@ export default function HomeView() {
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonTitle}>Comenzar</Text>
       </TouchableOpacity>
+      <Text onPress={handleNavigateToHistory} style={styles.historyLabel}>Ver historial</Text>
       <Text style={styles.authorTitle}>Desarrollado por:</Text>
       <Text style={styles.author}>Carlos Hernández</Text>
       <Text style={styles.author}>Johander Parra</Text>
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#0096FF',
     borderRadius: 8,
-    marginBottom: 100,
+    marginBottom: 20,
   },
   buttonTitle: {
     fontSize: 18,
@@ -63,5 +68,11 @@ const styles = StyleSheet.create({
     marginTop: 50,
     textDecorationLine: 'underline',
     color: '#0096FF',
-  }
+  },
+  historyLabel: {
+    fontSize: 16,
+    color: '#0096FF',
+    textDecorationLine: 'underline',
+    marginBottom: 70,
+  },
 });
