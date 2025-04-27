@@ -1,50 +1,165 @@
-# Welcome to your Expo app 👋
+# 📱 React Native App con Expo - Guía de Instalación y Ejecución
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Bienvenido 👋 Esta guía explica cómo configurar tu entorno para correr una aplicación de React Native usando Expo, y cómo generar un archivo APK para Android.
 
-## Get started
+---
 
-1. Install dependencies
+## 🛠 Requisitos Previos
 
-   ```bash
-   npm install
-   ```
+- Sistema operativo: Windows, macOS o Linux.
+- Conexión a Internet.
+- Un dispositivo móvil Android/iOS o un emulador Android Studio o Xcode.
+- Tener instalado Node.js.
 
-2. Start the app
+---
 
-   ```bash
-    npx expo start
-   ```
+## 📦 Instalación de Node.js
 
-In the output, you'll find options to open the app in a
+Node.js es necesario para ejecutar herramientas como Expo CLI.
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. **Descargar Node.js**  
+   - Ir a [https://nodejs.org](https://nodejs.org).
+   - Descargar la **versión LTS** recomendada.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+2. **Verificar la instalación**
 
 ```bash
-npm run reset-project
+node -v
+npm -v
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🚀 Instalación de Expo CLI
 
-To learn more about developing your project with Expo, look at the following resources:
+Expo es un conjunto de herramientas que simplifica el desarrollo de apps en React Native.
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+1. **Instalar Expo CLI de manera global**
 
-## Join the community
+```bash
+npm install -g expo-cli
+```
 
-Join our community of developers creating universal apps.
+2. **Verificar la instalación**
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+```bash
+expo --version
+```
+
+---
+
+## ⚡ Crear un Nuevo Proyecto
+
+1. **Crear un proyecto nuevo**
+
+```bash
+expo init nombre-de-tu-app
+```
+
+Selecciona una plantilla (por ejemplo, `blank`).
+
+2. **Moverte al directorio del proyecto**
+
+```bash
+cd nombre-de-tu-app
+```
+
+---
+
+## 📱 Correr la Aplicación
+
+1. **Instalar dependencias**
+
+```bash
+npm install
+```
+
+2. **Iniciar el servidor de desarrollo**
+
+```bash
+expo start
+```
+
+3. **Opciones para ejecutar la app:**
+   - **Dispositivo físico:**  
+     Instalar la app **Expo Go** en Android o iOS.  
+     Escanear el código QR que aparece en tu terminal o navegador.
+   
+   - **Emulador Android:**
+
+     ```bash
+     expo start --android
+     ```
+
+   - **Simulador iOS (solo Mac):**
+
+     ```bash
+     expo start --ios
+     ```
+
+---
+
+## 🛠️ Generar un APK para Android
+
+Expo usa **EAS Build** para construir APKs o archivos AAB.
+
+1. **Instalar EAS CLI**
+
+```bash
+npm install -g eas-cli
+```
+
+2. **Iniciar sesión en Expo**
+
+```bash
+expo login
+```
+
+3. **Configurar EAS Build**
+
+```bash
+eas build:configure
+```
+
+4. **Construir el APK**
+
+```bash
+eas build --platform android --profile preview
+```
+
+   - Este comando subirá tu app a los servidores de Expo para construir el APK.
+   - Una vez terminado, Expo te proporcionará un enlace para descargar el APK.
+
+---
+
+## 📥 Instalar el APK en tu Dispositivo Android
+
+1. Transferir el archivo `.apk` a tu dispositivo (vía USB, correo, Google Drive, etc.).
+2. Abrir el archivo en el dispositivo y permitir la instalación desde fuentes desconocidas si se solicita.
+
+---
+
+## 🧹 Comandos Rápidos
+
+| Acción                     | Comando                          |
+| --------------------------- | -------------------------------- |
+| Instalar dependencias       | `npm install`                    |
+| Iniciar el proyecto         | `expo start`                     |
+| Ejecutar en Android         | `expo start --android`           |
+| Ejecutar en iOS             | `expo start --ios`               |
+| Construir APK para Android  | `eas build --platform android`   |
+
+---
+
+## 📚 Recursos Útiles
+
+- [Documentación Oficial de React Native](https://reactnative.dev/)
+- [Documentación de Expo](https://docs.expo.dev/)
+- [Documentación de EAS Build](https://docs.expo.dev/build/introduction/)
+
+---
+
+## ✨ ¡Todo Listo!
+
+Ahora puedes desarrollar, probar y construir tu aplicación móvil.  
+¡Mucho éxito! 🚀
